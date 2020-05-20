@@ -1,0 +1,4 @@
+{ 
+  "WORKING_API_URL": "http://localhost:3000",
+  "CRASHING_API_URL": "http://localhost:3001"
+}
