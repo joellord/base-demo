@@ -1,0 +1,19 @@
+{
+  "name": "base-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx concurrently \"npm run api\" \"npm run crash\" \"npm run front\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "api": "node ./api",
+    "crash": "node ./crashing",
+    "front": "cd frontend && npm run serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
