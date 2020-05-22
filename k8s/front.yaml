@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  labels:
+    app: base-demo
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      section: front
+  template:
+    metadata: 
+      labels:
+        app: base-demo
+        section: front
+    spec:
+      containers:
+        - name: front
+          image: joellord/demo-front:latest
+          ports: 
+          - containerPort: 8080
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front
+  labels:
+    app: base-demo
+    section: front
+spec:
+  selector:
+    section: front
+  ports:
+    - port: 8080
+      protocol: TCP

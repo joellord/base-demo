@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app: base-demo
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      section: api
+  template:
+    metadata: 
+      labels:
+        app: base-demo
+        section: api
+    spec:
+      containers:
+        - name: api
+          image: joellord/demo-api:latest
+          ports: 
+          - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  labels:
+    app: base-demo
+    section: api
+spec:
+  selector:
+    section: api
+  ports:
+    - port: 3000
+      protocol: TCP

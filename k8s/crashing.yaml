@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crash
+  labels:
+    app: base-demo
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+      section: crash
+  template:
+    metadata: 
+      labels:
+        app: base-demo
+        section: crash
+    spec:
+      containers:
+        - name: crash
+          image: joellord/demo-crash:latest
+          ports: 
+          - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crash
+  labels:
+    app: base-demo
+    section: crash
+spec:
+  selector:
+    section: crash
+  ports:
+    - port: 3000
+      protocol: TCP
