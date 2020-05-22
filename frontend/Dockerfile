@@ -20,8 +20,11 @@ RUN npm install
 RUN npm run build
 
 FROM nginx:1.17
-WORKDIR /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/nginx.conf
+WORKDIR /code
 COPY --from=0 /app/dist .
 COPY start_nginx.sh /
 RUN chmod +x /start_nginx.sh
+EXPOSE 8080
+USER 1000
 ENTRYPOINT [ "/start_nginx.sh" ]
