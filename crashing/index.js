@@ -7,9 +7,10 @@ app.use(cors());
 const PORT = process.env.PORT || 3001;
 const TTC = process.env.TTC || 60;
 const SLOW_DURATION = process.env.SLOW_DURATION || 4000;
+const AUTOCRASH = process.env.AUTOCRASH || false;
 let timeLeft = TTC;
 
-if (process.env.AUTOCRASH) {
+if (AUTOCRASH) {
   console.log(`This server will crash in ${TTC} seconds`);
   console.log("Initiating countdown");
   setTimeout(() => {
@@ -26,7 +27,7 @@ app.get("/", (req, res) => {
     data: "Hello",
     timestamp: (new Date()).getTime()
   };
-  if (timeLeft !== TTC) body.timeLeft = timeLeft;
+  if (AUTOCRASH) body.timeLeft = timeLeft;
   res.send({data: "Hello", timestamp: (new Date()).getTime(), timeLeft}).status(200);
 });
 
