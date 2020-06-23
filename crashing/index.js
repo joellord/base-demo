@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const tracer = require("dd-trace").init();
 const app = express();
+
 app.use(cors());
 
 const PORT = process.env.PORT || 3001;
