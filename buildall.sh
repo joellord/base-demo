@@ -1,5 +1,5 @@
 export DOCKER_USER=joellord
-export BASE_NAME=demo
+export BASE_NAME=dd
 echo "Build and push all containers as $DOCKER_USER/$BASE_NAME*"
 echo "Starting with frontend"
 cd frontend
