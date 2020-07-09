@@ -18,6 +18,11 @@ spec:
       containers:
         - name: front
           image: joellord/demo-front:latest
+          env:
+          - name: WORKING_API_URL
+            value: "api"
+          - name: CRASHING_API_URL
+            value: "crash"
           ports: 
           - containerPort: 8080
           resources:

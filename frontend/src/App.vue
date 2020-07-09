@@ -1,15 +1,22 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
+    <h1>API Tester</h1>
+    <h2>{{ hostname }}</h2>
     <ContactApi />
   </div>
 </template>
 
 <script>
 import ContactApi from "./components/ContactApi.vue";
+import Config from "./config.json";
 
 export default {
   name: "App",
+  data: function() {
+    return {
+      hostname: Config.HOSTNAME
+    };
+  },
   components: {
     ContactApi
   }
@@ -24,5 +31,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+h2 {
+  font-size: 1.25em;
+  font-style: italic;
 }
 </style>

@@ -16,6 +16,7 @@ RUN wget --no-check-certificate https://raw.githubusercontent.com/stedolan/jq/ma
 WORKDIR /app/src
 RUN contents="$(jq '.WORKING_API_URL = "$WORKING_API_URL"' config.json)" && echo ${contents} > config.json
 RUN contents="$(jq '.CRASHING_API_URL = "$CRASHING_API_URL"' config.json)" && echo ${contents} > config.json
+RUN contents="$(jq '.HOSTNAME = "$HOSTNAME"' config.json)" && echo ${contents} > config.json
 RUN npm install
 RUN npm run build
 
@@ -28,11 +29,11 @@ RUN chown -R nginx:nginx /var/cache/nginx && \
 RUN touch /var/run/nginx.pid && \
    chown -R nginx:nginx /var/run/nginx.pid  
 RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx /var/run/nginx.pid && \
-   chmod -R 770 /var/cache/nginx /var/run /var/log/nginx /var/run/nginx.pid
+   chmod -R 775 /var/cache/nginx /var/run /var/log/nginx /var/run/nginx.pid
 COPY start_nginx.sh /
 RUN chmod +x /start_nginx.sh
 USER nginx
 WORKDIR /code
-COPY --from=0 /app/dist .
+COPY --from=0 --chown=nginx /app/dist .
 EXPOSE 8080
 ENTRYPOINT [ "/start_nginx.sh" ]

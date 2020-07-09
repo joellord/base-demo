@@ -7,7 +7,11 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-  res.send({data: "Hello", timestamp: (new Date()).getTime()}).status(200);
+  res.send({
+    data: "Hello", 
+    timestamp: (new Date()).getTime(),
+    host: process.env.HOSTNAME
+  }).status(200);
 });
 
 app.listen(PORT, () => {

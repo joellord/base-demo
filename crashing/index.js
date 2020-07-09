@@ -25,15 +25,21 @@ if (AUTOCRASH) {
 app.get("/", (req, res) => {
   let body = {
     data: "Hello",
-    timestamp: (new Date()).getTime()
+    timestamp: (new Date()).getTime(),
+    slowReqDuration: SLOW_DURATION,
+    host: process.env.HOSTNAME
   };
-  if (AUTOCRASH) body.timeLeft = timeLeft;
-  res.send({data: "Hello", timestamp: (new Date()).getTime(), timeLeft}).status(200);
+  if (AUTOCRASH) {
+    body.timeLeft = timeLeft;
+    body.autoCrash = true;
+  }
+  res.send(body).status(200);
 });
 
 app.get("/crash", (req, res) => {
   console.log("System crash requested...");
-  process.exit((Math.random() * 100) + 1);
+  res.send({data: "Crash request received.", host: process.env.HOSTNAME}).status(200);
+  setTimeout(() => process.exit((Math.random() * 100) + 1), 100);
 });
 
 app.get("/slow", (req, res) => {
@@ -46,7 +52,8 @@ app.get("/slow", (req, res) => {
       data: "Hello",
       reqStart: start,
       reqEnd: end,
-      reqDuration: (end - start) / 1000
+      reqDuration: (end - start) / 1000,
+      host: process.env.HOSTNAME
     }).status(200);
   }, SLOW_DURATION);
 });
