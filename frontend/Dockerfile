@@ -35,5 +35,6 @@ RUN chmod +x /start_nginx.sh
 USER nginx
 WORKDIR /code
 COPY --from=0 --chown=nginx /app/dist .
+RUN chmod -R ugo+rw /code
 EXPOSE 8080
 ENTRYPOINT [ "/start_nginx.sh" ]
